@@ -61,11 +61,17 @@ void TS_SysMng_EcapConfig(void)
     DevCfgRegs.SOFTPRES3.bit.ECAP1 = 0;
 
     EDIS;
+    /* Disable all eCAP interrupts*/
+    ECap1Regs.ECEINT.all = 0;
 
-    ECap1Regs.ECEINT.all = 0;                   // Disable all eCAP interrupts
-    ECap1Regs.ECCTL2.bit.TSCTRSTOP = 0;         // Stop the counter
-    ECap1Regs.TSCTR = 0;                        // Clear the counter
-    ECap1Regs.CTRPHS = 0;                    // Clear the counter phase register
+    /* Stop the counter */
+    ECap1Regs.ECCTL2.bit.TSCTRSTOP = 0;
+
+    /* Clear the counter */
+    ECap1Regs.TSCTR = 0;
+
+    /* Clear the counter phase register */
+    ECap1Regs.CTRPHS = 0;
 
     /* ---------------Capture control1 Register configuration---------------*/
     /* ---------------------------------------------------------------------*/
@@ -124,8 +130,11 @@ void TS_SysMng_EcapConfig(void)
     /* Enable desired eCAP interrupts */
     ECap1Regs.ECEINT.bit.CEVT3 = 0x1;
 
-    PieCtrlRegs.PIEIER4.bit.INTx1 = 1;  // Enable ECAP1_INT in PIE group 4
-    //IER |= M_INT4;                      // Enable INT4 in IER to enable PIE group 4
+    /* Enable ECAP1_INT in PIE group 4 */
+    PieCtrlRegs.PIEIER4.bit.INTx1 = 1;
+
+    /* Enable INT4 in IER to enable PIE group 4 */
+    //IER |= M_INT4;
 
 }
 /**********************************************************************************
