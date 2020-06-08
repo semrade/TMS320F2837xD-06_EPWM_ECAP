@@ -39,24 +39,21 @@
  *
  *********************************************************************************/
 #include "F28x_Project.h"
-#include "F2837xD_Adc_defines.h"
-#include "adc.h"
 #include "TS_SysMng_Adc.h"
 #include "TS_SysMng_ePwm.h"
 #include "TS_DspLUT_X.h"
-
+#include "F2837xD_Adc_defines.h"
+#include "adc.h"
 /**********************************************************************************
  *  Global Variables
  *
  *********************************************************************************/
-
-volatile Uint16 s_u16PwmModDelay = 0; /* Counter to change PWM */
-volatile Uint16 s_u16PwmModDir = 1; /* Create a direction for PWM */
-volatile Uint16 s_u16PwmCmpaVal = TS_SYSMNG_EPWM_MAX_DUTY; /* Starting value for PWM */
-
-Uint16 u16DacOffset;              // DAC offset
-Uint16 u16DacOutput;              // DAC output
-Uint16 t_u16AdcBuf[50];
+volatile Uint16 s_u16PwmModDelay = 0;
+volatile Uint16 s_u16PwmModDir = 1;
+volatile Uint16 s_u16PwmCmpaVal = TS_SYSMNG_EPWM_MAX_DUTY;
+Uint16 u16DacOffset;              /* DAC offset */
+Uint16 u16DacOutput;              /* DAC output */
+Uint16 t_u16AdcBuf[BUFFER_SIZE];
 
 /**********************************************************************************
  * \function:       TS_SysMng_AdcConfig
@@ -77,7 +74,6 @@ void TS_SysMng_AdcConfig(void)
 
     /* Interrupt pulse position when end of conversion occurs */
     AdcaRegs.ADCCTL1.all = ADC_PULSE_END_OF_CONV;
-
 
     /* Adc clock configuration is 50Khz */
     AdcaRegs.ADCCTL2.bit.PRESCALE = ADC_CLK_DIV_4_0;
@@ -138,6 +134,7 @@ interrupt void TS_SysMng_Adca1ISR(void)
 {
     Uint16 *s_pu16AdcBufPtr = t_u16AdcBuf;
     static Uint16 s_iqSinusTableIndexer; /* set to 0 by the compiler */
+
     /************************Store ADC result into tab*****************************/
     /*  Must acknowledge the PIE group */
     PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;
@@ -149,7 +146,7 @@ interrupt void TS_SysMng_Adca1ISR(void)
     *s_pu16AdcBufPtr++ = AdcaResultRegs.ADCRESULT0;
 
     /* Brute-force the circular buffer */
-    if (s_pu16AdcBufPtr == (t_u16AdcBuf + 50))
+    if (s_pu16AdcBufPtr == (t_u16AdcBuf + BUFFER_SIZE))
     {
         /* Rewind the pointer to beginning */
         s_pu16AdcBufPtr = t_u16AdcBuf;

@@ -56,7 +56,7 @@
  ***********************************************************************************/
 void TS_SysMng_ePwm1Config (void);
 void TS_SysMng_ePwm2Config (void);
-void TS_SysMng_ePwmClockEnalbe(void);
+void TS_SysMng_ePwmsClockEnalbe(void);
 void TS_SysMng_Protection(void);
 
 

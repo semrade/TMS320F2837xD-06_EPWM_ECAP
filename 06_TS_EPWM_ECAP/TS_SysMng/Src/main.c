@@ -45,7 +45,6 @@
 #include "TS_SysMng_Dac.h"
 #include "TS_SysMng_Ecap.h"
 #include "TS_SysMng_Gpio.h"
-
 /**********************************************************************************
  *  External Included Files
  *
@@ -55,7 +54,6 @@
  *  Defines
  *
  *********************************************************************************/
-
 
 /**********************************************************************************
  *  Global Variables
@@ -117,7 +115,7 @@ void main(void)
     TS_SysMng_ePwm2Config();
 
     /* Enable EPWM clock*/
-    TS_SysMng_ePwmClockEnalbe();
+    TS_SysMng_ePwmsClockEnalbe();
 
     /* DAC Reset */
     TS_SysMng_DacCongif();
@@ -134,7 +132,7 @@ void main(void)
     /* Enable Global interrupt INTM */
     EINT;
 
-    /* Enable Global realtime interrupt DBGM */
+    /* Enable Global real-time interrupt DBGM */
     ERTM;
 
     /* Main loop */

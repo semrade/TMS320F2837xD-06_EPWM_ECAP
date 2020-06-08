@@ -36,6 +36,10 @@
 #ifndef TS_SYSMNG_INC_TS_SYSMNG_GPIO_H_
 #define TS_SYSMNG_INC_TS_SYSMNG_GPIO_H_
 
+/***********************************************************************************
+ * Function prototypes
+ *
+ ***********************************************************************************/
 void TS_SysMng_GpioConfig(void);
 
 

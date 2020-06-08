@@ -33,6 +33,10 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  **********************************************************************************/
+/**********************************************************************************
+ *  Included Files
+ *
+ *********************************************************************************/
 #include "TS_SysMng_ePwm.h"
 #include "F28x_Project.h"
 #include "F2837xD_EPwm_defines.h"
@@ -56,12 +60,6 @@ void TS_SysMng_ePwm2Config(void)
     /* Must disable the clock to the ePWM modules if you want all ePWM modules
      * synchronized. */
     CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 0;
-
-    /* Disable EALLOW protected register access */
-    EDIS;
-
-    /* Enable EALLOW protected register access */
-    EALLOW;
 
     /* ePWM2 is reset */
     DevCfgRegs.SOFTPRES2.bit.EPWM2 = 1;
@@ -290,11 +288,14 @@ void TS_SysMng_ePwm1Config(void)
     EPwm1Regs.AQCTLA.bit.CAD = 0x2;
 
     /* Action-qualifier control register B */
-    //TODO
+    //TODO Not necessary for this project
+
     /* Action-qualifier control register C */
-    //TODO
+    //TODO Not necessary for this project
+
     /* Action-qualifier control register D */
-    //TODO
+    //TODO Not necessary for this project
+
     /*****************************************************************************
      * Step 2: Force the PWM output state through software control
      *****************************************************************************/
@@ -424,17 +425,17 @@ void TS_SysMng_ePwm1Config(void)
 
 }
 /**********************************************************************************
- * \function:       TS_SysMng_ePwmClockEnalbe
+ * \function:       TS_SysMng_ePwmsClockEnalbe
  * \brief           Enable the clocks to the ePWM module
  *                  This should be done after all ePWM modules are configured
  *                  to ensure synchronization between the ePWM modules
  * \param[in]       void
  * \return          void
  **********************************************************************************/
-void TS_SysMng_ePwmClockEnalbe(void)
+void TS_SysMng_ePwmsClockEnalbe(void)
 {
     /*---------------------------------------------------------------------*/
-    /*---------------- Enable the clocks to the ePWM module----------------*/
+    /*---------------- Enable the clocks to the ePWM modules---------------*/
     /*---Note: this should be done after all ePWM modules are configured---*/
     /*-------to ensure synchronization between the ePWM modules------------*/
     /*---------------------------------------------------------------------*/
