@@ -282,10 +282,10 @@ void TS_SysMng_ePwm1Config(void)
      *****************************************************************************/
 
     /* Clear force EPWMxA output low */
-    EPwm1Regs.AQCTLA.bit.CAU = 0x1;
+    EPwm1Regs.AQCTLA.bit.CAU = EPWM_AQ_OUTPUT_LOW;
 
     /* Set force EPWMxA output high */
-    EPwm1Regs.AQCTLA.bit.CAD = 0x2;
+    EPwm1Regs.AQCTLA.bit.CAD = EPWM_AQ_OUTPUT_HIGH;
 
     /* Action-qualifier control register B */
     //TODO Not necessary for this project

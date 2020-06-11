@@ -51,8 +51,8 @@
 volatile Uint16 s_u16PwmModDelay = 0;
 volatile Uint16 s_u16PwmModDir = 1;
 volatile Uint16 s_u16PwmCmpaVal = TS_SYSMNG_EPWM_MAX_DUTY;
-Uint16 u16DacOffset;              /* DAC offset */
-Uint16 u16DacOutput;              /* DAC output */
+Uint16 u16DacOffset; /* DAC offset */
+Uint16 u16DacOutput; /* DAC output */
 Uint16 t_u16AdcBuf[BUFFER_SIZE];
 
 /**********************************************************************************
@@ -132,8 +132,7 @@ void TS_SysMng_AdcConfig(void)
  **********************************************************************************/
 interrupt void TS_SysMng_Adca1ISR(void)
 {
-    Uint16 *s_pu16AdcBufPtr = t_u16AdcBuf;
-    static Uint16 s_iqSinusTableIndexer; /* set to 0 by the compiler */
+    static Uint16 *s_pu16AdcBufPtr = t_u16AdcBuf;
 
     /************************Store ADC result into tab*****************************/
     /*  Must acknowledge the PIE group */
@@ -151,29 +150,6 @@ interrupt void TS_SysMng_Adca1ISR(void)
         /* Rewind the pointer to beginning */
         s_pu16AdcBufPtr = t_u16AdcBuf;
     }
-
-    /*************Generate a sin wave to feed ADC in*******************************/
-
-    if (1 == 1)
-    {
-//        u16DacOutput =
-//                u16DacOffset
-//                        + ((i16LutSinQuadrature[s_iqSinusTableIndexer++]
-//                                ^ 0x8000) >> 5);
-    }
-    else
-    {
-        u16DacOutput = u16DacOffset;
-    }
-
-    /* Wrap the index */
-    if (s_iqSinusTableIndexer > (TS_DSPDATALOG_SINE_LUT_SIZE - 1))
-    {
-        s_iqSinusTableIndexer = 0;
-    }
-
-    /* Write value to dac */
-    DacbRegs.DACVALS.all = u16DacOutput;
 
     /* ----Modulate ePWM1A output between 10% and 90% duty cycle---------- */
     /* Change PWM slowly to see waveform */
